@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GofPatternsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GofPatternsApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GofPatternsApplication.class, args);
+        UpdateData updateData = new UpdateData();
+        updateData.upadte();
+    }
 
 }
