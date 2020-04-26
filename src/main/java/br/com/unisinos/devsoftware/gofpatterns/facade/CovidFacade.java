@@ -1,9 +1,11 @@
-package br.com.unisinos.devsoftware.gofpatterns.service;
+package br.com.unisinos.devsoftware.gofpatterns.facade;
 
 import br.com.unisinos.devsoftware.gofpatterns.ResponseDto;
 import br.com.unisinos.devsoftware.gofpatterns.UpdateCovidData;
-import br.com.unisinos.devsoftware.gofpatterns.builder.Country;
-import br.com.unisinos.devsoftware.gofpatterns.domain.*;
+import br.com.unisinos.devsoftware.gofpatterns.builder.CountryBuilder;
+import br.com.unisinos.devsoftware.gofpatterns.domain.DeathSituation;
+import br.com.unisinos.devsoftware.gofpatterns.domain.Situation;
+import br.com.unisinos.devsoftware.gofpatterns.domain.SituationType;
 import br.com.unisinos.devsoftware.gofpatterns.factory.SituationFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,15 +14,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class CovidService {
+public class CovidFacade {
 
     @Autowired
     UpdateCovidData updateCovidData;
 
-    public List<Country> getHigherNumberOfCasesOnOneDay() {
+    public List<CountryBuilder> getHigherNumberOfCasesOnOneDay() {
         HashMap<String, List<ResponseDto>> updatedCovidData = updateCovidData.update();
-        List<Country> countryList = new ArrayList<>();
-        List<Country> finalCountryList = countryList;
+        List<CountryBuilder> countryBuilderList = new ArrayList<>();
+        List<CountryBuilder> finalCountryBuilderList = countryBuilderList;
 
         updatedCovidData.forEach((key, value) -> {
             for (int i = 0; i < value.size(); i++) {
@@ -36,26 +38,26 @@ public class CovidService {
             Optional<ResponseDto> responseDto = value.stream().max(Comparator.comparing(ResponseDto::getDeathsPerDay));
 
             Situation deathSituation = new SituationFactory().getSituation(SituationType.DEATH, responseDto.get().getDeathsPerDay());
-            Country country = new Country.Builder(key)
+            CountryBuilder countryBuilder = new CountryBuilder.Builder(key)
                     .date(responseDto.get().getDate())
                     .deathSituation((DeathSituation) deathSituation)
                     .build();
 
-            finalCountryList.add(country);
+            finalCountryBuilderList.add(countryBuilder);
         });
 
-        countryList = finalCountryList;
-        Comparator<Country> ordemNatural = Comparator.comparingInt(country -> country.getDeathSituation().getQuantity());
-        countryList = countryList.stream()
+        countryBuilderList = finalCountryBuilderList;
+        Comparator<CountryBuilder> ordemNatural = Comparator.comparingInt(countryBuilder -> countryBuilder.getDeathSituation().getQuantity());
+        countryBuilderList = countryBuilderList.stream()
                 .sorted(ordemNatural.reversed())
                 .collect(Collectors.toList());
 
-        return countryList;
+        return countryBuilderList;
     }
 
-    public List<Country> getTotalSituationPerCountry() {
+    public List<CountryBuilder> getTotalSituationPerCountry() {
         HashMap<String, List<ResponseDto>> updatedCovidData = updateCovidData.update();
-        List<Country> countryList = new ArrayList<>();
+        List<CountryBuilder> countryBuilderList = new ArrayList<>();
 
         updatedCovidData.forEach((key, value) -> {
             ResponseDto responseDto = value.get(value.size() - 1);
@@ -63,16 +65,16 @@ public class CovidService {
             Situation deathSituation = new SituationFactory().getSituation(SituationType.DEATH, responseDto.getDeaths());
             Situation confirmedSituation = new SituationFactory().getSituation(SituationType.CONFIRMED, responseDto.getConfirmed());
             Situation recoveredSituation = new SituationFactory().getSituation(SituationType.RECOVERED, responseDto.getRecovered());
-            Country country = new Country.Builder(key)
+            CountryBuilder countryBuilder = new CountryBuilder.Builder(key)
                     .date(responseDto.getDate())
-                    .deathSituation((DeathSituation) deathSituation)
-                    .confirmedSituation((ConfirmedSituation) confirmedSituation)
-                    .recoveredSituation((RecoveredSituation) recoveredSituation)
+                    .deathSituation(deathSituation)
+                    .confirmedSituation(confirmedSituation)
+                    .recoveredSituation(recoveredSituation)
                     .build();
 
-            countryList.add(country);
+            countryBuilderList.add(countryBuilder);
         });
 
-        return countryList.stream().sorted(Comparator.comparing(Country::getName)).collect(Collectors.toList());
+        return countryBuilderList.stream().sorted(Comparator.comparing(CountryBuilder::getName)).collect(Collectors.toList());
     }
 }

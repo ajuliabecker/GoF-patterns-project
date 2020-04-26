@@ -1,12 +1,13 @@
 package br.com.unisinos.devsoftware.gofpatterns.controller;
 
-import br.com.unisinos.devsoftware.gofpatterns.builder.Country;
-import br.com.unisinos.devsoftware.gofpatterns.service.CovidService;
+import br.com.unisinos.devsoftware.gofpatterns.builder.CountryBuilder;
+import br.com.unisinos.devsoftware.gofpatterns.domain.DailyUpdate;
+import br.com.unisinos.devsoftware.gofpatterns.facade.CovidFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -16,16 +17,21 @@ import java.util.List;
 public class CovidController {
 
     @Autowired
-    CovidService covidService;
+    CovidFacade covidFacade;
 
     @GetMapping(value = "totalSituationPerCountry", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Country> getTotalSituationPerCountry() {
-        return covidService.getTotalSituationPerCountry();
+    public List<CountryBuilder> getTotalSituationPerCountry() {
+        return covidFacade.getTotalSituationPerCountry();
     }
 
     @GetMapping(value = "higherNumberOfCasesOnOneDay", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Country> getHigherNumberOfCasesOnOneDay() {
-        return covidService.getHigherNumberOfCasesOnOneDay();
+    public List<CountryBuilder> getHigherNumberOfCasesOnOneDay() {
+        return covidFacade.getHigherNumberOfCasesOnOneDay();
+    }
+
+    @GetMapping(value = "/dailyUpdates", produces = MediaType.APPLICATION_JSON_VALUE)
+    public DailyUpdate[] getDailyUpdates(@RequestParam String countryName) {
+        return covidFacade.getDailyUpdates(countryName);
     }
 
 }

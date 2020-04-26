@@ -1,20 +1,18 @@
 package br.com.unisinos.devsoftware.gofpatterns.builder;
 
-import br.com.unisinos.devsoftware.gofpatterns.domain.ConfirmedSituation;
-import br.com.unisinos.devsoftware.gofpatterns.domain.DeathSituation;
-import br.com.unisinos.devsoftware.gofpatterns.domain.RecoveredSituation;
+import br.com.unisinos.devsoftware.gofpatterns.domain.Situation;
 import lombok.Data;
 
 @Data
-public class Country {
+public class CountryBuilder {
 
     private String name;
     private String date;
-    private DeathSituation deathSituation;
-    private RecoveredSituation recoveredSituation;
-    private ConfirmedSituation confirmedSituation;
+    private Situation deathSituation;
+    private Situation recoveredSituation;
+    private Situation confirmedSituation;
 
-    public Country(Builder builder) {
+    public CountryBuilder(Builder builder) {
         this.name = builder.getName();
         this.date = builder.getDate();
         this.deathSituation = builder.getDeathSituation();
@@ -27,9 +25,9 @@ public class Country {
 
         private String name;
         private String date;
-        private DeathSituation deathSituation;
-        private RecoveredSituation recoveredSituation;
-        private ConfirmedSituation confirmedSituation;
+        private Situation deathSituation;
+        private Situation recoveredSituation;
+        private Situation confirmedSituation;
 
 
         public Builder(String name) {
@@ -39,17 +37,17 @@ public class Country {
             this.name = name;
         }
 
-        public Builder deathSituation(DeathSituation deathSituation) {
+        public Builder deathSituation(Situation deathSituation) {
             this.deathSituation = deathSituation;
             return this;
         }
 
-        public Builder recoveredSituation(RecoveredSituation recoveredSituation) {
+        public Builder recoveredSituation(Situation recoveredSituation) {
             this.recoveredSituation = recoveredSituation;
             return this;
         }
 
-        public Builder confirmedSituation(ConfirmedSituation confirmedSituation) {
+        public Builder confirmedSituation(Situation confirmedSituation) {
             this.confirmedSituation = confirmedSituation;
             return this;
         }
@@ -59,8 +57,8 @@ public class Country {
             return this;
         }
 
-        public Country build() {
-            return new Country(this);
+        public CountryBuilder build() {
+            return new CountryBuilder(this);
         }
     }
 }
