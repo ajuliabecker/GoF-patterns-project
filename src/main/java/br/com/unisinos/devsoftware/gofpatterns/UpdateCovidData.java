@@ -2,11 +2,13 @@ package br.com.unisinos.devsoftware.gofpatterns;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.List;
 
+@Component
 public class UpdateCovidData {
 
     private static String REQUEST_URL = "https://pomber.github.io/covid19/timeseries.json";
