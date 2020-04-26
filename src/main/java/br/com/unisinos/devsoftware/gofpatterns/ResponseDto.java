@@ -1,5 +1,6 @@
 package br.com.unisinos.devsoftware.gofpatterns;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
@@ -9,4 +10,6 @@ public class ResponseDto {
     private Integer confirmed;
     private Integer deaths;
     private Integer recovered;
+    @JsonIgnore
+    private Integer deathsPerDay;
 }

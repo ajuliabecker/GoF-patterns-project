@@ -1,9 +1,11 @@
 package br.com.unisinos.devsoftware.gofpatterns;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class UpdateCovidData {
 
@@ -13,14 +15,16 @@ public class UpdateCovidData {
 
     private ObjectMapper objectMapper;
 
-    public HashMap upadte() {
+    public HashMap<String, List<ResponseDto>> update() {
         restTemplate = new RestTemplate();
         objectMapper = new ObjectMapper();
         String json = restTemplate.getForObject(REQUEST_URL, String.class);
 
-        HashMap responseDto = new HashMap();
+        HashMap<String, List<ResponseDto>> responseDto = new HashMap<>();
+
         try {
-            responseDto = objectMapper.readValue(json, HashMap.class);
+            responseDto = objectMapper.readValue(json, new TypeReference<HashMap<String, List<ResponseDto>>>() {
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
