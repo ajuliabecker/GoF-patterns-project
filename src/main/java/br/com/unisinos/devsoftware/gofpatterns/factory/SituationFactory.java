@@ -8,17 +8,17 @@ import lombok.Data;
 @AllArgsConstructor
 public class SituationFactory {
 
-    public Situation getSituation(SituationType type) {
+    public Situation getSituation(SituationType type, Integer quantity) {
         Situation situation = null;
         switch (type) {
             case CONFIRMED:
-                situation = new ConfirmedSituation();
+                situation = new ConfirmedSituation(quantity);
                 break;
             case RECOVERED:
-                situation = new RecoveredSituation();
+                situation = new RecoveredSituation(quantity);
                 break;
             case DEATH:
-                situation = new DeathSituation();
+                situation = new DeathSituation(quantity);
                 break;
             default:
                 break;
