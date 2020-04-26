@@ -8,8 +8,8 @@ public class GofPatternsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GofPatternsApplication.class, args);
-        UpdateData updateData = new UpdateData();
-        updateData.upadte();
+        UpdateCovidData updateCovidData = new UpdateCovidData();
+        updateCovidData.upadte();
     }
 
 }
