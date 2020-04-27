@@ -3,14 +3,18 @@ package br.com.unisinos.devsoftware.gofpatterns.facade;
 import br.com.unisinos.devsoftware.gofpatterns.ResponseDto;
 import br.com.unisinos.devsoftware.gofpatterns.UpdateCovidData;
 import br.com.unisinos.devsoftware.gofpatterns.builder.CountryBuilder;
-import br.com.unisinos.devsoftware.gofpatterns.domain.DeathSituation;
 import br.com.unisinos.devsoftware.gofpatterns.domain.Situation;
 import br.com.unisinos.devsoftware.gofpatterns.domain.SituationType;
 import br.com.unisinos.devsoftware.gofpatterns.factory.SituationFactory;
+import br.com.unisinos.devsoftware.gofpatterns.factory.StrategyContextFactory;
+import br.com.unisinos.devsoftware.gofpatterns.strategy.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,38 +23,13 @@ public class CovidFacade {
     @Autowired
     UpdateCovidData updateCovidData;
 
-    public List<CountryBuilder> getHigherNumberOfCasesOnOneDay() {
+    public List<CountryBuilder> getHigherNumberOfCasesOnOneDay(SituationType type) {
+        StrategyContextFactory strategyContextFactory = new StrategyContextFactory();
         HashMap<String, List<ResponseDto>> updatedCovidData = updateCovidData.update();
         List<CountryBuilder> countryBuilderList = new ArrayList<>();
-        List<CountryBuilder> finalCountryBuilderList = countryBuilderList;
 
-        updatedCovidData.forEach((key, value) -> {
-            for (int i = 0; i < value.size(); i++) {
-                int deathsPerDay = 0;
-                if (i == 0) {
-                    value.get(i).setDeathsPerDay(value.get(i).getDeaths());
-                } else {
-                    deathsPerDay = value.get(i).getDeaths() - value.get(i - 1).getDeaths();
-                    value.get(i).setDeathsPerDay(deathsPerDay);
-                }
-            }
-
-            Optional<ResponseDto> responseDto = value.stream().max(Comparator.comparing(ResponseDto::getDeathsPerDay));
-
-            Situation deathSituation = new SituationFactory().getSituation(SituationType.DEATH, responseDto.get().getDeathsPerDay());
-            CountryBuilder countryBuilder = new CountryBuilder.Builder(key)
-                    .date(responseDto.get().getDate())
-                    .deathSituation((DeathSituation) deathSituation)
-                    .build();
-
-            finalCountryBuilderList.add(countryBuilder);
-        });
-
-        countryBuilderList = finalCountryBuilderList;
-        Comparator<CountryBuilder> ordemNatural = Comparator.comparingInt(countryBuilder -> countryBuilder.getDeathSituation().getQuantity());
-        countryBuilderList = countryBuilderList.stream()
-                .sorted(ordemNatural.reversed())
-                .collect(Collectors.toList());
+        Context context = new Context(strategyContextFactory.getDataByType(type));
+        countryBuilderList = context.executeStrategy(updatedCovidData);
 
         return countryBuilderList;
     }

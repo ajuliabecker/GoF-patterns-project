@@ -1,9 +1,11 @@
 package br.com.unisinos.devsoftware.gofpatterns.builder;
 
 import br.com.unisinos.devsoftware.gofpatterns.domain.Situation;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CountryBuilder {
 
     private String name;
@@ -11,6 +13,9 @@ public class CountryBuilder {
     private Situation deathSituation;
     private Situation recoveredSituation;
     private Situation confirmedSituation;
+    private Integer deathsPerDay;
+    private Integer confirmedPerDay;
+    private Integer recoveredPerDay;
 
     public CountryBuilder(Builder builder) {
         this.name = builder.getName();
@@ -18,6 +23,9 @@ public class CountryBuilder {
         this.deathSituation = builder.getDeathSituation();
         this.recoveredSituation = builder.getRecoveredSituation();
         this.confirmedSituation = builder.getConfirmedSituation();
+        this.deathsPerDay = builder.getDeathsPerDay();
+        this.confirmedPerDay = builder.getConfirmedPerDay();
+        this.recoveredPerDay = builder.getRecoveredPerDay();
     }
 
     @Data
@@ -28,6 +36,9 @@ public class CountryBuilder {
         private Situation deathSituation;
         private Situation recoveredSituation;
         private Situation confirmedSituation;
+        private Integer deathsPerDay;
+        private Integer confirmedPerDay;
+        private Integer recoveredPerDay;
 
 
         public Builder(String name) {
@@ -35,6 +46,21 @@ public class CountryBuilder {
                 throw new IllegalArgumentException("name can not be empty");
             }
             this.name = name;
+        }
+
+        public Builder deathsPerDay(Integer quantity) {
+            this.deathsPerDay = quantity;
+            return this;
+        }
+
+        public Builder confirmedPerDay(Integer quantity) {
+            this.confirmedPerDay = quantity;
+            return this;
+        }
+
+        public Builder recoveredPerDay(Integer quantity) {
+            this.recoveredPerDay = quantity;
+            return this;
         }
 
         public Builder deathSituation(Situation deathSituation) {
