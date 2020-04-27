@@ -18,7 +18,7 @@ public class HigherNumberOfRecovered implements HigherNumberOfCasesOnOneDayStrat
             for (int i = 0; i < value.size(); i++) {
                 int recoveredPerDay;
                 if (i == 0) {
-                    value.get(i).setRecoveredPerDay(value.get(i).getDeaths());
+                    value.get(i).setRecoveredPerDay(value.get(i).getRecovered());
                 } else {
                     recoveredPerDay = value.get(i).getRecovered() - value.get(i - 1).getRecovered();
                     value.get(i).setRecoveredPerDay(recoveredPerDay);
@@ -30,7 +30,7 @@ public class HigherNumberOfRecovered implements HigherNumberOfCasesOnOneDayStrat
             Situation recoveredSituation = new SituationFactory().getSituation(SituationType.RECOVERED, responseDto.get().getRecovered());
             CountryBuilder countryBuilder = new CountryBuilder.Builder(key)
                     .date(responseDto.get().getDate())
-                    .deathSituation(recoveredSituation)
+                    .recoveredSituation(recoveredSituation)
                     .recoveredPerDay(responseDto.get().getRecoveredPerDay())
                     .build();
 

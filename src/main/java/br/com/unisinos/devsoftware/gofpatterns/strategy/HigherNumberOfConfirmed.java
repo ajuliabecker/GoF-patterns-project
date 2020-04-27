@@ -18,7 +18,7 @@ public class HigherNumberOfConfirmed implements HigherNumberOfCasesOnOneDayStrat
             for (int i = 0; i < value.size(); i++) {
                 int confirmedPerDay;
                 if (i == 0) {
-                    value.get(i).setConfirmedPerDay(value.get(i).getDeaths());
+                    value.get(i).setConfirmedPerDay(value.get(i).getConfirmed());
                 } else {
                     confirmedPerDay = value.get(i).getConfirmed() - value.get(i - 1).getConfirmed();
                     value.get(i).setConfirmedPerDay(confirmedPerDay);

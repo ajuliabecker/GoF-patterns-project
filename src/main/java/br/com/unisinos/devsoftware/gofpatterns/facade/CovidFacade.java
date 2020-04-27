@@ -26,7 +26,7 @@ public class CovidFacade {
     public List<CountryBuilder> getHigherNumberOfCasesOnOneDay(SituationType type) {
         StrategyContextFactory strategyContextFactory = new StrategyContextFactory();
         HashMap<String, List<ResponseDto>> updatedCovidData = updateCovidData.update();
-        List<CountryBuilder> countryBuilderList = new ArrayList<>();
+        List<CountryBuilder> countryBuilderList;
 
         Context context = new Context(strategyContextFactory.getDataByType(type));
         countryBuilderList = context.executeStrategy(updatedCovidData);
