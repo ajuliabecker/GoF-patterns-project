@@ -8,6 +8,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 public class UpdateCovidDataSingleton {
 
     private static UpdateCovidDataSingleton updateCovidInstance;
@@ -20,11 +22,10 @@ public class UpdateCovidDataSingleton {
     }
 
     public static synchronized UpdateCovidDataSingleton getInstance() {
-        if (updateCovidInstance == null) {
-            return new UpdateCovidDataSingleton();
-        } else {
-            return updateCovidInstance;
+        if (isNull(updateCovidInstance)) {
+            updateCovidInstance = new UpdateCovidDataSingleton();
         }
+        return updateCovidInstance;
     }
 
     public HashMap<String, List<ResponseDto>> update() {
