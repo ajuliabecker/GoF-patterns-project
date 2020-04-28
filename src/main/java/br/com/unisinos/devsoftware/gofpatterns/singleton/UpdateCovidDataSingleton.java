@@ -3,13 +3,11 @@ package br.com.unisinos.devsoftware.gofpatterns.singleton;
 import br.com.unisinos.devsoftware.gofpatterns.ResponseDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.List;
 
-@Component
 public class UpdateCovidDataSingleton {
 
     private static UpdateCovidDataSingleton updateCovidInstance;
@@ -17,7 +15,6 @@ public class UpdateCovidDataSingleton {
 
     private RestTemplate restTemplate;
     private ObjectMapper objectMapper;
-
 
     private UpdateCovidDataSingleton() {
     }
