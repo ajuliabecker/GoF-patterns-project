@@ -1,5 +1,9 @@
 package br.com.unisinos.devsoftware.gofpatterns;
 
+/**
+ * Autores: Grupo2 (Arthur Linhares, Júlia Becker de Azevedo, Luis Henrique Hendges, Marcelo Augusto Gava, Mauricio Hartmann)
+ */
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 

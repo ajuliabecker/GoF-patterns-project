@@ -1,5 +1,9 @@
 package br.com.unisinos.devsoftware.gofpatterns.facade;
 
+/**
+ * Autores: Grupo2 (Arthur Linhares, Júlia Becker de Azevedo, Luis Henrique Hendges, Marcelo Augusto Gava, Mauricio Hartmann)
+ */
+
 import br.com.unisinos.devsoftware.gofpatterns.ResponseDto;
 import br.com.unisinos.devsoftware.gofpatterns.builder.CountryBuilder;
 import br.com.unisinos.devsoftware.gofpatterns.domain.Situation;

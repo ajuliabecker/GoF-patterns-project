@@ -1,5 +1,9 @@
 package br.com.unisinos.devsoftware.gofpatterns.factory;
 
+/**
+ * Autores: Grupo2 (Arthur Linhares, Júlia Becker de Azevedo, Luis Henrique Hendges, Marcelo Augusto Gava, Mauricio Hartmann)
+ */
+
 import br.com.unisinos.devsoftware.gofpatterns.domain.SituationType;
 import br.com.unisinos.devsoftware.gofpatterns.strategy.HigherNumberOfCasesOnOneDayStrategy;
 import br.com.unisinos.devsoftware.gofpatterns.strategy.HigherNumberOfConfirmed;

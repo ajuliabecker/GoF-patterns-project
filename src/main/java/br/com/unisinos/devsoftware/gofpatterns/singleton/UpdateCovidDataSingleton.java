@@ -1,5 +1,9 @@
 package br.com.unisinos.devsoftware.gofpatterns.singleton;
 
+/**
+ * Autores: Grupo2 (Arthur Linhares, Júlia Becker de Azevedo, Luis Henrique Hendges, Marcelo Augusto Gava, Mauricio Hartmann)
+ */
+
 import br.com.unisinos.devsoftware.gofpatterns.ResponseDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,9 +19,6 @@ public class UpdateCovidDataSingleton {
     private static UpdateCovidDataSingleton updateCovidInstance;
     private static String REQUEST_URL = "https://pomber.github.io/covid19/timeseries.json";
 
-    private RestTemplate restTemplate;
-    private ObjectMapper objectMapper;
-
     private UpdateCovidDataSingleton() {
     }
 
@@ -29,8 +30,8 @@ public class UpdateCovidDataSingleton {
     }
 
     public HashMap<String, List<ResponseDto>> update() {
-        restTemplate = new RestTemplate();
-        objectMapper = new ObjectMapper();
+        RestTemplate restTemplate = new RestTemplate();
+        ObjectMapper objectMapper = new ObjectMapper();
         String json = restTemplate.getForObject(REQUEST_URL, String.class);
 
         HashMap<String, List<ResponseDto>> responseDto = new HashMap<>();
