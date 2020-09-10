@@ -46,13 +46,18 @@ public class CountryBuilder {
 
 
         public Builder(String name) {
-            if (name.isEmpty()) {
+            if (name.isEmpty() && name != null) {
                 throw new IllegalArgumentException("name can not be empty");
             }
             this.name = name;
         }
 
         public Builder deathsPerDay(Integer quantity) {
+            this.deathsPerDay = quantity;
+            return this;
+        }
+
+        public Builder deathsPerDay2(Integer quantity) {
             this.deathsPerDay = quantity;
             return this;
         }
