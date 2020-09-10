@@ -46,7 +46,7 @@ public class CountryBuilder {
 
 
         public Builder(String name) {
-            if (name.isEmpty()) {
+            if (name.isEmpty() && name != null) {
                 throw new IllegalArgumentException("name can not be empty");
             }
             this.name = name;
