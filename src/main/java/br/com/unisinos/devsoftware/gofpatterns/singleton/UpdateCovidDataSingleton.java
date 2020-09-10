@@ -17,7 +17,7 @@ import static java.util.Objects.isNull;
 public class UpdateCovidDataSingleton {
 
     private static UpdateCovidDataSingleton updateCovidInstance;
-    private static String REQUEST_URL = "https://pomber.github.io/covid19/timeseries.json";
+    private static final String REQUEST_URL = "https://pomber.github.io/covid19/timeseries.json";
 
     private UpdateCovidDataSingleton() {
     }
